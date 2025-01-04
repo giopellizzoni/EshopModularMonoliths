@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrapper", "Bootstrapper", "{6AFCDE4D-ECCD-465C-A4B0-AA4E388449B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{AD8A122F-7ABA-42E4-A4B8-24A567028D44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{3BBBC69C-BD86-49D3-A28E-147A008C8456}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Bootstrapper\Api\Api\Api.csproj", "{3D52422E-DD32-4BA7-A266-0D7C950F47F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D52422E-DD32-4BA7-A266-0D7C950F47F4} = {6AFCDE4D-ECCD-465C-A4B0-AA4E388449B4}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D52422E-DD32-4BA7-A266-0D7C950F47F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D52422E-DD32-4BA7-A266-0D7C950F47F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D52422E-DD32-4BA7-A266-0D7C950F47F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D52422E-DD32-4BA7-A266-0D7C950F47F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
