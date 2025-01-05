@@ -10,10 +10,6 @@
       <ProjectReference Include="..\..\..\Shared\Shared\Shared.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Products\Models\" />
-    </ItemGroup>
-
   
 
 </Project>
