@@ -1,5 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+builder.Services
+    .AddCatalogModule(builder.Configuration)
+    .AddBasketModule(builder.Configuration)
+    .AddOrderingModule(builder.Configuration);
 
-app.Run();
+var app = builder.Build();
+app.UseCatalogModule()
+    .UseBasketModule()
+    .UseOrderingModule();
+
+await app.RunAsync();
