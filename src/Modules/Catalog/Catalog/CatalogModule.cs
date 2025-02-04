@@ -1,6 +1,4 @@
-﻿using Shared.Data;
-
-namespace Catalog;
+﻿namespace Catalog;
 
 public static class CatalogModule
 {
@@ -28,6 +26,7 @@ public static class CatalogModule
     {
         var connectionString = configuration.GetConnectionString("Database");
         services.AddDbContext<CatalogDbContext>(options => options.UseNpgsql(connectionString));
+        services.AddScoped<IDataSeeder, CatalogDataSeeder>();
 
         return services;
     }
@@ -35,7 +34,6 @@ public static class CatalogModule
     public static IApplicationBuilder UseCatalogModule(this IApplicationBuilder app)
     {
         app.UseMigration<CatalogDbContext>();
-
         return app;
     }
 }
