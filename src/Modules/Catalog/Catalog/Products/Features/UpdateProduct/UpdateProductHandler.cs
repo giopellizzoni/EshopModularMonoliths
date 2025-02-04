@@ -26,13 +26,23 @@ public class UpdateProductHandler : ICommandHandler<UpdateProductCommand, Update
             throw new Exception($"Product with id {command.Product.Id} not found.");
         }
 
-        product.Update(
-            command.Product.Name,
-            command.Product.Categories,
-            command.Product.Description,
-            command.Product.ImageFile,
-            command.Product.Price);
+        UpdateProductWithNewValues(product, command.Product);
+
+        _context.Products.Update(product);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return new UpdateProductResult(true);
+    }
+
+    private void UpdateProductWithNewValues(
+        Product product,
+        ProductDto commandProduct)
+    {
+        product.Update(
+            commandProduct.Name,
+            commandProduct.Categories,
+            commandProduct.Description,
+            commandProduct.ImageFile,
+            commandProduct.Price);
     }
 }
