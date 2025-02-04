@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿#nullable disable
 
-#nullable disable
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Catalog.Persistence.Migrations
+namespace Catalog.Data.Migrations
 {
     /// <inheritdoc />
     public partial class UpdateFieldName : Migration
