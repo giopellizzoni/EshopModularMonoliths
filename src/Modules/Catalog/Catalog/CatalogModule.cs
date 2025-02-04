@@ -1,4 +1,8 @@
-﻿namespace Catalog;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+
+using Shared.Data.Interceptors;
+
+namespace Catalog;
 
 public static class CatalogModule
 {
@@ -6,7 +10,19 @@ public static class CatalogModule
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddMediator();
         services.AddDataInfrastructure(configuration);
+
+        return services;
+    }
+
+    private static IServiceCollection AddMediator(this IServiceCollection services)
+    {
+        services.AddMediatR(
+            config =>
+            {
+                config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            });
 
         return services;
     }
@@ -15,6 +31,8 @@ public static class CatalogModule
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
         services.AddCatalogDbContext(configuration);
 
         return services;
@@ -25,7 +43,16 @@ public static class CatalogModule
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Database");
-        services.AddDbContext<CatalogDbContext>(options => options.UseNpgsql(connectionString));
+
+        services.AddDbContext<CatalogDbContext>(
+            (
+                sp,
+                options) =>
+            {
+                options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+                options.UseNpgsql(connectionString);
+            });
+
         services.AddScoped<IDataSeeder, CatalogDataSeeder>();
 
         return services;
@@ -34,6 +61,7 @@ public static class CatalogModule
     public static IApplicationBuilder UseCatalogModule(this IApplicationBuilder app)
     {
         app.UseMigration<CatalogDbContext>();
+
         return app;
     }
 }
