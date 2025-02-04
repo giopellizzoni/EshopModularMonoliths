@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Catalog;
+﻿namespace Catalog;
 
 public static class CatalogModule
 {
@@ -10,11 +6,8 @@ public static class CatalogModule
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        //
-        // services
-        //     .AddApplicationServices()
-        //     .AddInfrastructureServices(configuration)
-        //     .AddApiServices(configuration);
+
+        services.AddDataInfrastructure(configuration);
 
         return services;
     }
@@ -23,4 +16,20 @@ public static class CatalogModule
     {
         return app;
     }
+
+    private static IServiceCollection AddDataInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddCatalogDbContext(configuration);
+
+        return services;
+    }
+
+    private static IServiceCollection AddCatalogDbContext(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("Database");
+        services.AddDbContext<CatalogDbContext>(options => options.UseNpgsql(connectionString));
+        return services;
+    }
 }
+
+

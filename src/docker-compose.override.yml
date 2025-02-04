@@ -2,7 +2,7 @@ services:
   eshopdb:
     container_name: eshopdb
     environment:
-      - POSTGRES_DB=EshopDB
+      - POSTGRES_DB=EshopDb
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
     restart: always
