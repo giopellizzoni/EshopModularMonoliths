@@ -6,7 +6,8 @@ builder.Services
     .AddOrderingModule(builder.Configuration);
 
 var app = builder.Build();
-app.UseCatalogModule()
+app
+    .UseCatalogModule()
     .UseBasketModule()
     .UseOrderingModule();
 
