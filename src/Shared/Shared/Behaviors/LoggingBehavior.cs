@@ -1,9 +1,7 @@
-using System.Diagnostics;
-
 namespace Shared.Behaviors;
 
 public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull, IRequest<TResponse>
+    where TRequest : IRequest<TResponse>
     where TResponse : notnull
 {
     private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
