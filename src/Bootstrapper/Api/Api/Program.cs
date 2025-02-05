@@ -1,5 +1,3 @@
-using Shared.Exceptions.Handler;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -14,10 +12,12 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
 
+app.MapCarter();
 app
     .UseCatalogModule()
     .UseBasketModule()
     .UseOrderingModule();
 
-app.MapCarter();
+app.UseExceptionHandler(options => {});
+
 await app.RunAsync();
