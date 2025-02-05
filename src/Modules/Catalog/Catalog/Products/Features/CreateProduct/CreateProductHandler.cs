@@ -8,27 +8,33 @@ public sealed record CreateProductResult(Guid Id);
 public class CreateProductHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     private readonly CatalogDbContext _context;
-    private readonly ILogger<CreateProductHandler> _logger;
 
-    public CreateProductHandler(
-        CatalogDbContext context,
-        ILogger<CreateProductHandler> logger)
+    public CreateProductHandler(CatalogDbContext context)
     {
         _context = context;
-        _logger = logger;
     }
 
     public async Task<CreateProductResult> Handle(
         CreateProductCommand command,
         CancellationToken cancellationToken)
     {
-        _logger.LogInformation("CreateProductCommandHandler.Handle called with: {@Command}", command);
-
-        var product = command.Product.Adapt<Product>();
+        var product = CreateNewProduct(command.Product);
 
         _context.Products.Add(product);
         await _context.SaveChangesAsync(cancellationToken);
 
         return new CreateProductResult(product.Id);
+    }
+
+    private static Product CreateNewProduct(ProductDto productDto)
+    {
+        var product = Product.Create(
+            productDto.Name,
+            productDto.Categories,
+            productDto.Description,
+            productDto.ImageFile,
+            productDto.Price);
+
+        return product;
     }
 }
