@@ -23,20 +23,8 @@ public class GetProductsHandler : IQueryHandler<GetProductsQuery, GetProductsRes
             .OrderBy(p => p.Name)
             .ToListAsync(cancellationToken);
 
-        var productDtos = MapToProductDtos(products);
+        var productDtos = products.Adapt<List<ProductDto>>();
 
         return new GetProductsResult(productDtos);
-    }
-
-    private static IEnumerable<ProductDto> MapToProductDtos(List<Product> products)
-    {
-        return products.Select(
-            p => new ProductDto(
-                p.Id,
-                p.Name,
-                p.Categories,
-                p.Description,
-                p.ImageFile,
-                p.Price));
     }
 }

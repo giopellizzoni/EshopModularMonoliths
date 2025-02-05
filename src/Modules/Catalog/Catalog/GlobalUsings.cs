@@ -5,6 +5,8 @@ global using Catalog.Data.Seed;
 global using Catalog.Products.Dtos;
 global using Catalog.Products.Models;
 
+global using Mapster;
+
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
