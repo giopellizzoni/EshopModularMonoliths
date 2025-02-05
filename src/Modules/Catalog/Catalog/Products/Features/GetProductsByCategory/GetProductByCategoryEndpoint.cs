@@ -1,15 +1,13 @@
 namespace Catalog.Products.Features.GetProductsByCategory;
 
-public sealed record GetProductByCategoryRequest(string Category);
-
-public sealed record GetProductByCategoryResponse(Product Product);
+public sealed record GetProductByCategoryResponse(IEnumerable<ProductDto> Products);
 
 public class GetProductByCategoryEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapGet(
-            "/products/{category}",
+            "/products/category/{category}",
             async (
                 string category,
                 ISender sender,
