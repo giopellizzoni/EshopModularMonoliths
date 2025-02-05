@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
-
-using Shared.Data.Interceptors;
-
-namespace Catalog;
+﻿namespace Catalog;
 
 public static class CatalogModule
 {
@@ -12,6 +8,7 @@ public static class CatalogModule
     {
         services.AddMediator();
         services.AddDataInfrastructure(configuration);
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         return services;
     }
@@ -22,6 +19,7 @@ public static class CatalogModule
             config =>
             {
                 config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
 
         return services;
