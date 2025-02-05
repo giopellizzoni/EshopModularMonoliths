@@ -1,5 +1,3 @@
-using Catalog.Products.Exceptions;
-
 namespace Catalog.Products.Features.DeleteProduct;
 
 public sealed record DeleteProductCommand(Guid Id)

@@ -1,3 +1,5 @@
+using Shared.Exceptions.Handler;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -7,6 +9,8 @@ builder.Services
     .AddCatalogModule(builder.Configuration)
     .AddBasketModule(builder.Configuration)
     .AddOrderingModule(builder.Configuration);
+
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
 

@@ -1,5 +1,3 @@
-using Catalog.Products.Features.GetProductsByCategory;
-
 namespace Catalog.Products.Features.GetProductById;
 
 public sealed record GetProductByIdQuery(Guid Id)
@@ -26,7 +24,7 @@ public class GetProductByIdHandler : IQueryHandler<GetProductByIdQuery, GetProdu
 
         if (product is null)
         {
-            throw new Exception("Product not found");
+            throw new ProductNotFoundException(query.Id);
         }
 
         var productDto = product.Adapt<ProductDto>();

@@ -1,5 +1,3 @@
-using Catalog.Products.Exceptions;
-
 namespace Catalog.Products.Features.UpdateProduct;
 
 public record UpdateProductCommand(ProductDto Product)
