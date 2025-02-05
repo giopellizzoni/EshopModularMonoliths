@@ -1,9 +1,11 @@
+using Shared.Pagination;
+
 namespace Catalog.Products.Features.GetProducts;
 
-public sealed record GetProductsQuery()
+public sealed record GetProductsQuery(PaginationRequest PaginationRequest)
     : IQuery<GetProductsResult>;
 
-public sealed record GetProductsResult(IEnumerable<ProductDto> Products);
+public sealed record GetProductsResult(PaginatedResult<ProductDto> Products);
 
 public class GetProductsHandler : IQueryHandler<GetProductsQuery, GetProductsResult>
 {
@@ -18,13 +20,20 @@ public class GetProductsHandler : IQueryHandler<GetProductsQuery, GetProductsRes
         GetProductsQuery query,
         CancellationToken cancellationToken)
     {
+        var pageIndex = query.PaginationRequest.PageIndex;
+        var pageSize = query.PaginationRequest.PageSize;
+
+        var totalCount = await _context.Products.LongCountAsync(cancellationToken);
+
         var products = await _context.Products
             .AsNoTracking()
             .OrderBy(p => p.Name)
+            .Skip(pageSize * pageIndex)
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
 
         var productDtos = products.Adapt<List<ProductDto>>();
 
-        return new GetProductsResult(productDtos);
+        return new GetProductsResult(new PaginatedResult<ProductDto>(pageIndex, pageSize, totalCount, productDtos));
     }
 }
