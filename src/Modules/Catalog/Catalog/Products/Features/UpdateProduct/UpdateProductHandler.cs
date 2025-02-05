@@ -1,3 +1,5 @@
+using Catalog.Products.Exceptions;
+
 namespace Catalog.Products.Features.UpdateProduct;
 
 public record UpdateProductCommand(ProductDto Product)
@@ -23,7 +25,7 @@ public class UpdateProductHandler : ICommandHandler<UpdateProductCommand, Update
 
         if (product is null)
         {
-            throw new Exception($"Product with id {command.Product.Id} not found.");
+            throw new ProductNotFoundException(command.Product.Id);
         }
 
         UpdateProductWithNewValues(product, command.Product);
@@ -34,7 +36,7 @@ public class UpdateProductHandler : ICommandHandler<UpdateProductCommand, Update
         return new UpdateProductResult(true);
     }
 
-    private void UpdateProductWithNewValues(
+    private static void UpdateProductWithNewValues(
         Product product,
         ProductDto commandProduct)
     {

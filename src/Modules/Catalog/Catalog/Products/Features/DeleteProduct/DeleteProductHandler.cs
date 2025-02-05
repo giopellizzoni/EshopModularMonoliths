@@ -1,3 +1,5 @@
+using Catalog.Products.Exceptions;
+
 namespace Catalog.Products.Features.DeleteProduct;
 
 public sealed record DeleteProductCommand(Guid Id)
@@ -22,7 +24,7 @@ public class DeleteProductHandler : ICommandHandler<DeleteProductCommand, Delete
 
         if (product is null)
         {
-            throw new Exception($"Product with id {command.Id} not found.");
+            throw new ProductNotFoundException(command.Id);
         }
 
         _context.Products.Remove(product);
