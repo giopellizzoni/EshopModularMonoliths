@@ -1,7 +1,5 @@
 namespace Catalog.Products.Features.DeleteProduct;
 
-public sealed record DeleteProductRequest(Guid Id);
-
 public sealed record DeleteProductResponse(bool IsSuccess);
 
 public class DeleteProductEndpoint : ICarterModule
@@ -11,11 +9,11 @@ public class DeleteProductEndpoint : ICarterModule
         app.MapDelete(
                 "/products/{id}",
                 async (
-                    DeleteProductRequest request,
+                    Guid id,
                     ISender sender,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = request.Adapt<DeleteProductCommand>();
+                    var command = new DeleteProductCommand(id);
 
                     var result = await sender.Send(command, cancellationToken);
 
