@@ -2,18 +2,18 @@ namespace Catalog.Products.EventHandlers;
 
 public class ProductPriceChangedEventHandler: INotificationHandler<ProductPriceChangedEvent>
 {
-    public readonly ILogger<ProductPriceChangedEventHandler> _Logger;
+    private readonly ILogger<ProductPriceChangedEventHandler> _logger;
 
     public ProductPriceChangedEventHandler(ILogger<ProductPriceChangedEventHandler> logger)
     {
-        _Logger = logger;
+        _logger = logger;
     }
 
     public Task Handle(
         ProductPriceChangedEvent notification,
         CancellationToken cancellationToken)
     {
-        _Logger.LogInformation("Domain Event Handled: {DomainEvent}", notification.GetType().Name);
+        _logger.LogInformation("Domain Event Handled: {DomainEvent}", notification.GetType().Name);
         return Task.CompletedTask;
     }
 }
