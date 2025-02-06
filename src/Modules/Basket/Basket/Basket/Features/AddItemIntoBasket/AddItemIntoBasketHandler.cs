@@ -1,5 +1,3 @@
-using Mapster;
-
 namespace Basket.Basket.Features.AddItemIntoBasket;
 
 public sealed record AddItemIntoBasketCommand(string UserName, ShoppingCartItemDto ShoppingCartItem) : ICommand<AddItemIntoBasketResult>;

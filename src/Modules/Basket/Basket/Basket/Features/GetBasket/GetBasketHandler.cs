@@ -1,5 +1,3 @@
-using Mapster;
-
 namespace Basket.Basket.Features.GetBasket;
 
 public sealed record GetBasketQuery(string UserName) : IQuery<GetBasketResult>;

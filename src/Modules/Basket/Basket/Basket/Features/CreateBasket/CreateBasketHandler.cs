@@ -1,5 +1,3 @@
-using Mapster;
-
 namespace Basket.Basket.Features.CreateBasket;
 
 public sealed record CreateBasketCommand(ShoppingCartDto ShoppingCart) : ICommand<CreateBasketResult>;
