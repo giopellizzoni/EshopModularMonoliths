@@ -25,7 +25,7 @@ steps:
       Write-Host ' - - - - - - - - - - - - - - - - - - - - - - - - - '
       $stageDir = '$(Build.SourcesDirectory)' | Split-Path
       $githubDir = $stageDir +"\"+"gitHub"
-      $destination = $githubDir +"\"+"StudiesProject.git"
+      $destination = $githubDir +"\"+"EshopModularMonoliths.git"
       
       $alias = 'giopellizzoni:'+ "$(Github.PAT)"
       
