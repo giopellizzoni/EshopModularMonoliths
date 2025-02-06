@@ -19,11 +19,12 @@ steps:
       Write-Host ' reflect Azure Devops repo changes to GitHub repo'
       Write-Host ' - - - - - - - - - - - - - - - - - - - - - - - - - '
       $stageDir = '$(Build.SourcesDirectory)' | Split-Path
-      $githubDir = $stageDir +"\"+"gitHub"
-      # $destination = $githubDir +"\"+"EshopModularMonoliths.git"
+      $githubDir = $stageDir +"/"+"gitHub"
+      # $destination = $githubDir +"/"+"EshopModularMonoliths.git"
       
+      echo "Stage Dir"
       ls $stageDir
-      ls $githubDir
+      
       # $alias = 'giopellizzoni:'+ "$(Github.PAT)"
       
       # $sourceURL = 'https://$(AzureDevOps.PAT)@https://pellizzonigio@dev.azure.com/pellizzonigio/StudiesProject/_git/EshopModularMonoliths'
