@@ -32,7 +32,7 @@ steps:
       $destination = $githubDir +"\"+"$AzureRepoName"+".git"
       Write-Host "github Dir is:  $destination"
 
-      $sourceURL = 'https://$(AzureDevOps.PAT)@$(ADOCloneUrl)'
+      $sourceURL = "https://" + $($AzureDevOps.PAT) +"@" + $($ADOCloneUrl)
       Write-Host "source URL: $sourceURL"
 
       $destURL = "https://" + $($(Github.PAT)) + "@" + $($GithubCloneURL)
