@@ -31,12 +31,17 @@ steps:
       
       $destination = $githubDir +"\"+"$AzureRepoName"+".git"
       Write-Host "github Dir is:  $destination"
-      
 
+      $sourceURL = 'https://$(AzureDevOps.PAT)@$(ADOCloneUrl)'
+      Write-Host "source URL: $sourceURL"
+
+      $destURL = "https://" + $($(Github.PAT)) + "@" + $($GithubCloneURL)
+      Write-Host "dest URL: $destURL"
+      
       # $alias = 'giopellizzoni:'+ "$(Github.PAT)"
       
-      # $sourceURL = 'https://$(AzureDevOps.PAT)@https://pellizzonigio@'
-      # $destURL = 'https://' + $alias + '@https://'
+      
+      
       
       # #Check if the parent directory exists and delete
       # if((Test-Path -path $githubDir))
