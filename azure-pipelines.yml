@@ -22,9 +22,6 @@ steps:
       $githubDir = $stageDir +"/"+"gitHub"
       # $destination = $githubDir +"/"+"EshopModularMonoliths.git"
       
-      echo "SourceDir"
-      echo '$(Build.SourcesDirectory)' | Split-Path
-
       echo "Stage Dir"
       ls $stageDir
       
