@@ -11,7 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Basket\Features\" />
+      <Folder Include="Basket\EventHandlers\" />
+      <Folder Include="Basket\Features\CheckoutBasket\" />
     </ItemGroup>
 
 </Project>

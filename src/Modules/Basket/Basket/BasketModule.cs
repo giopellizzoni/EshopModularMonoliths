@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using Shared.Data;
 using Shared.Data.Interceptors;
 
 namespace Basket;
@@ -41,6 +42,7 @@ public static class BasketModule
 
     public static IApplicationBuilder UseBasketModule(this IApplicationBuilder app)
     {
+        app.UseMigration<BasketDbContext>();
         return app;
     }
 }

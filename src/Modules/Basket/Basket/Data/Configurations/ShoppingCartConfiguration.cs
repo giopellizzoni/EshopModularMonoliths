@@ -15,6 +15,6 @@ public class ShoppingCartConfiguration : IEntityTypeConfiguration<ShoppingCart>
 
         builder.HasMany(e => e.Items)
             .WithOne()
-            .HasForeignKey(si => si.ShoppingCartId);
+            .HasForeignKey(si => si.Id);
     }
 }
