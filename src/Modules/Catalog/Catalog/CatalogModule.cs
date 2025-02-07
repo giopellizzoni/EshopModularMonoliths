@@ -6,23 +6,7 @@ public static class CatalogModule
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddMediator();
         services.AddDataInfrastructure(configuration);
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-        return services;
-    }
-
-    private static IServiceCollection AddMediator(this IServiceCollection services)
-    {
-        services.AddMediatR(
-            config =>
-            {
-                config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-                config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-            });
-
         return services;
     }
 
