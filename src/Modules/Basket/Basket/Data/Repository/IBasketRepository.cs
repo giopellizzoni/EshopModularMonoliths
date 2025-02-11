@@ -2,7 +2,7 @@ namespace Basket.Data.Repository;
 
 public interface IBasketRepository
 {
-    Task<ShoppingCart?> GetBasketAsync(
+    Task<ShoppingCart> GetBasketAsync(
         string userName,
         bool asNoTracking = true,
         CancellationToken cancellationToken = default);

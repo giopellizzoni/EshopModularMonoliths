@@ -1,4 +1,7 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
+
+using Basket.Data.JsonConverters;
 
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -6,6 +9,17 @@ namespace Basket.Data.Repository;
 
 public class CachedBasketRepository : IBasketRepository
 {
+    private readonly JsonSerializerOptions _options = new JsonSerializerOptions
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        Converters =
+        {
+            new ShoppingCartConverter(),
+            new ShoppingCartItemConverter()
+        }
+    };
+
     private readonly IBasketRepository _repository;
     private readonly IDistributedCache _cache;
 
@@ -17,7 +31,7 @@ public class CachedBasketRepository : IBasketRepository
         _cache = cache;
     }
 
-    public async Task<ShoppingCart?> GetBasketAsync(
+    public async Task<ShoppingCart> GetBasketAsync(
         string userName,
         bool asNoTracking = true,
         CancellationToken cancellationToken = default)
@@ -30,14 +44,11 @@ public class CachedBasketRepository : IBasketRepository
         var cachedBasket = await _cache.GetStringAsync(userName, cancellationToken);
         if (!string.IsNullOrEmpty(cachedBasket))
         {
-            return JsonSerializer.Deserialize<ShoppingCart>(cachedBasket);
+            return JsonSerializer.Deserialize<ShoppingCart>(cachedBasket, _options)!;
         }
 
         var basket = await _repository.GetBasketAsync(userName, asNoTracking, cancellationToken);
-        if (basket is not null)
-        {
-            await _cache.SetStringAsync(userName, JsonSerializer.Serialize(basket), cancellationToken);
-        }
+        await _cache.SetStringAsync(userName, JsonSerializer.Serialize(basket, _options), cancellationToken);
 
         return basket;
     }
@@ -47,7 +58,7 @@ public class CachedBasketRepository : IBasketRepository
         CancellationToken cancellationToken = default)
     {
         await _repository.CreateBasketAsync(basket, cancellationToken);
-        await _cache.SetStringAsync(basket.UserName, JsonSerializer.Serialize(basket), cancellationToken);
+        await _cache.SetStringAsync(basket.UserName, JsonSerializer.Serialize(basket, _options), cancellationToken);
 
         return basket;
     }

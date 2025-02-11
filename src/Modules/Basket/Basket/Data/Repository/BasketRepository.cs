@@ -9,21 +9,23 @@ public class BasketRepository : IBasketRepository
         _context = context;
     }
 
-    public async Task<ShoppingCart?> GetBasketAsync(
+    public async Task<ShoppingCart> GetBasketAsync(
         string userName,
-        bool asNoTracking = false,
+        bool asNoTracking = true,
         CancellationToken cancellationToken = default)
     {
-        var cart = _context.ShoppingCarts
+        var query = _context.ShoppingCarts
             .Include(x => x.Items)
             .Where(x => x.UserName == userName);
 
         if (asNoTracking)
         {
-            cart.AsNoTracking();
+            query.AsNoTracking();
         }
 
-        return await cart.SingleOrDefaultAsync(cancellationToken);
+        var basket = await query.SingleOrDefaultAsync(cancellationToken);
+
+        return basket ?? throw new BasketNotFoundException(userName);
     }
 
     public async Task<ShoppingCart> CreateBasketAsync(
@@ -51,7 +53,9 @@ public class BasketRepository : IBasketRepository
         return true;
     }
 
-    public async Task<int> SaveChangesAsync(string? userName = null, CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(
+        string? userName = null,
+        CancellationToken cancellationToken = default)
     {
         return await _context.SaveChangesAsync(cancellationToken);
     }

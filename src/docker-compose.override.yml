@@ -11,6 +11,12 @@ services:
     volumes:
       - postgres_eshopdb:/var/lib/postgresql/data
 
+  distributed-cache:
+    container_name: redis
+    restart: on-failure
+    ports:
+      - "6379:6379"
+
   seq:
     container_name: seq
     environment:
