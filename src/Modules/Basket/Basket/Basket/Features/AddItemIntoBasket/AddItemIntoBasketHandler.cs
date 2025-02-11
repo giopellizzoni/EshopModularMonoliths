@@ -6,31 +6,24 @@ public sealed record AddItemIntoBasketResult(Guid Id);
 
 public class AddItemIntoBasketHandler : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
 {
-    private readonly BasketDbContext _context;
+    private readonly IBasketRepository _repository;
 
-    public AddItemIntoBasketHandler(BasketDbContext context)
+    public AddItemIntoBasketHandler(IBasketRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task<AddItemIntoBasketResult> Handle(
         AddItemIntoBasketCommand command,
         CancellationToken cancellationToken)
     {
-        var shoppingCart = await _context.ShoppingCarts
-            .Include(x => x.Items)
-            .SingleOrDefaultAsync(sp => sp.UserName == command.UserName, cancellationToken);
-
-        if (shoppingCart is null)
-        {
-            throw new BasketNotFoundException(command.UserName);
-        }
+        var shoppingCart = await _repository.GetBasketAsync(command.UserName, false, cancellationToken);
 
         var shoppingCartItem = command.ShoppingCartItem.Adapt<ShoppingCartItem>();
 
-        shoppingCart.AddItem(shoppingCartItem);
+        shoppingCart?.AddItem(shoppingCartItem);
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
 
         return new AddItemIntoBasketResult(shoppingCartItem.Id);
     }

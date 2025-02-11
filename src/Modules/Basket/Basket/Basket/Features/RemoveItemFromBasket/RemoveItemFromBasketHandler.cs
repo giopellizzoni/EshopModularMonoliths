@@ -6,29 +6,22 @@ public sealed record RemoveItemFromBasketResult(Guid Id);
 
 public class RemoveItemFromBasketHandler : ICommandHandler<RemoveItemFromBasketCommand, RemoveItemFromBasketResult>
 {
-    private readonly BasketDbContext _context;
+    private readonly IBasketRepository _repository;
 
-    public RemoveItemFromBasketHandler(BasketDbContext context)
+    public RemoveItemFromBasketHandler(IBasketRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task<RemoveItemFromBasketResult> Handle(
         RemoveItemFromBasketCommand command,
         CancellationToken cancellationToken)
     {
-        var shoppingCart = await _context.ShoppingCarts
-            .Include(x => x.Items)
-            .SingleOrDefaultAsync(x => x.UserName == command.UserName, cancellationToken);
+        var shoppingCart = await _repository.GetBasketAsync(command.UserName, cancellationToken: cancellationToken);
 
-        if (shoppingCart is null)
-        {
-            throw new BasketNotFoundException(command.UserName);
-        }
+        shoppingCart?.RemoveItem(command.ProductId);
+        await _repository.SaveChangesAsync(cancellationToken);
 
-        shoppingCart.RemoveItem(command.ProductId);
-        await _context.SaveChangesAsync(cancellationToken);
-
-        return new RemoveItemFromBasketResult(shoppingCart.Id);
+        return new RemoveItemFromBasketResult(shoppingCart?.Id ?? Guid.Empty);
     }
 }
