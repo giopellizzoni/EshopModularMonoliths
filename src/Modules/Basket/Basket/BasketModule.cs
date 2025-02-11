@@ -14,6 +14,7 @@ public static class BasketModule
         IConfiguration configuration)
     {
         services.AddBasketDbContext(configuration);
+        services.AddBasketRepositories();
 
         return services;
     }
@@ -38,6 +39,15 @@ public static class BasketModule
 
         return services;
     }
+
+    private static IServiceCollection AddBasketRepositories(
+        this IServiceCollection services)
+    {
+        services.AddScoped<IBasketRepository, BasketRepository>();
+        return services;
+    }
+
+
 
     public static IApplicationBuilder UseBasketModule(this IApplicationBuilder app)
     {

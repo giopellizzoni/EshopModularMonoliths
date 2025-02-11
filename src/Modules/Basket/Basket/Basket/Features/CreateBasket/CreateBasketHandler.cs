@@ -6,11 +6,11 @@ public sealed record CreateBasketResult(Guid Id);
 
 public class CreateBasketHandler : ICommandHandler<CreateBasketCommand, CreateBasketResult>
 {
-    private readonly BasketDbContext _context;
+    private readonly IBasketRepository _repository;
 
-    public CreateBasketHandler(BasketDbContext context)
+    public CreateBasketHandler(IBasketRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task<CreateBasketResult> Handle(
@@ -18,14 +18,11 @@ public class CreateBasketHandler : ICommandHandler<CreateBasketCommand, CreateBa
         CancellationToken cancellationToken)
     {
         var shoppingCart = CreateShoppingCart(command.ShoppingCart);
-
-        _context.ShoppingCarts.Add(shoppingCart);
-        await _context.SaveChangesAsync(cancellationToken);
-
+        await _repository.CreateBasketAsync(shoppingCart, cancellationToken);
         return new CreateBasketResult(shoppingCart.Id);
     }
 
-    private static ShoppingCart? CreateShoppingCart(ShoppingCartDto shoppingCartDto)
+    private static ShoppingCart CreateShoppingCart(ShoppingCartDto shoppingCartDto)
     {
         var newShoppingCart = ShoppingCart.Create(Guid.NewGuid(), shoppingCartDto.UserName);
 
