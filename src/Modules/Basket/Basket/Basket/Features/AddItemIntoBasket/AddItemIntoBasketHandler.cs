@@ -23,7 +23,7 @@ public class AddItemIntoBasketHandler : ICommandHandler<AddItemIntoBasketCommand
 
         shoppingCart?.AddItem(shoppingCartItem);
 
-        await _repository.SaveChangesAsync(cancellationToken);
+        await _repository.SaveChangesAsync(command.UserName, cancellationToken);
 
         return new AddItemIntoBasketResult(shoppingCartItem.Id);
     }
