@@ -8,7 +8,9 @@ namespace Shared.Extensions;
 
 public static class MediatRExtensions
 {
-    public static IServiceCollection AddMediatRWithAssemblies(this IServiceCollection services, params Assembly[] assemblies)
+    public static IServiceCollection AddMediatRWithAssemblies(
+        this IServiceCollection services,
+        params Assembly[] assemblies)
     {
         services.AddMediatR(
             config =>
@@ -17,9 +19,9 @@ public static class MediatRExtensions
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
                 config.AddOpenBehavior(typeof(LoggingBehavior<,>));
             });
+
         services.AddValidatorsFromAssemblies(assemblies);
 
         return services;
     }
-
 }

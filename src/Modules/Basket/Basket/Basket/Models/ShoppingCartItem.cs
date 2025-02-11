@@ -2,13 +2,19 @@ namespace Basket.Basket.Models;
 
 public class ShoppingCartItem : Entity<Guid>
 {
+    public ShoppingCartItem()
+    {
+
+    }
     public ShoppingCartItem(
+        Guid shoppingCartId,
         Guid productId,
         int quantity,
         string color,
         decimal price,
         string productName)
     {
+        ShoppingCartId = shoppingCartId;
         ProductId = productId;
         Quantity = quantity;
         Color = color;
@@ -16,6 +22,7 @@ public class ShoppingCartItem : Entity<Guid>
         ProductName = productName;
     }
 
+    public Guid ShoppingCartId { get; private set; } = default!;
     public Guid ProductId { get; private set; } = default!;
 
     public int Quantity { get; set; } = default;

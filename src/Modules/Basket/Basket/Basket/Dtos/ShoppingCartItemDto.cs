@@ -2,9 +2,9 @@ namespace Basket.Basket.Dtos;
 
 public sealed record ShoppingCartItemDto(
     Guid Id,
-    Guid ShoppingCartId,
     Guid ProductId,
+    int Quantity,
     string Color,
-    string ProductName,
     decimal Price,
-    int Quantity);
+    string ProductName
+);

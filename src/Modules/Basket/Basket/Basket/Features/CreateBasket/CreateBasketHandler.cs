@@ -25,14 +25,21 @@ public class CreateBasketHandler : ICommandHandler<CreateBasketCommand, CreateBa
         return new CreateBasketResult(shoppingCart.Id);
     }
 
-    private static ShoppingCart CreateShoppingCart(ShoppingCartDto shoppingCartDto)
+    private static ShoppingCart? CreateShoppingCart(ShoppingCartDto shoppingCartDto)
     {
         var newShoppingCart = ShoppingCart.Create(Guid.NewGuid(), shoppingCartDto.UserName);
 
         shoppingCartDto.Items.ForEach(
             item =>
             {
-                var cartItem = item.Adapt<ShoppingCartItem>();
+                var cartItem = new ShoppingCartItem(
+                    newShoppingCart.Id,
+                    item.ProductId,
+                    item.Quantity,
+                    item.Color,
+                    item.Price,
+                    item.ProductName);
+
                 newShoppingCart.AddItem(cartItem);
             });
 

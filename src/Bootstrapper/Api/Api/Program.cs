@@ -1,22 +1,20 @@
 var builder = WebApplication.CreateBuilder(args);
+
 // logging
 builder.Host.UseSerilog(
     (
         context,
         config) => config.ReadFrom.Configuration(context.Configuration));
 
-
 // common services
 var catalogAssembly = typeof(CatalogModule).Assembly;
 var basketAssembly = typeof(BasketModule).Assembly;
 
 builder.Services
-    .AddCarterWithAssemblies(
-        catalogAssembly,
-        basketAssembly
-    )
-    .AddMediatRWithAssemblies(catalogAssembly, basketAssembly);
+    .AddCarterWithAssemblies(catalogAssembly, basketAssembly);
 
+builder.Services
+    .AddMediatRWithAssemblies(catalogAssembly, basketAssembly);
 
 // module services
 builder.Services
@@ -25,7 +23,6 @@ builder.Services
     .AddOrderingModule(builder.Configuration);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-
 
 var app = builder.Build();
 

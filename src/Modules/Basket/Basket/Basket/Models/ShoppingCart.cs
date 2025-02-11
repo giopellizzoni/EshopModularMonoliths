@@ -10,7 +10,7 @@ public class ShoppingCart : Aggregate<Guid>
 
     public decimal TotalPrice => Items.Sum(x => x.Price * x.Quantity);
 
-    public static ShoppingCart Create(
+    public static ShoppingCart? Create(
         Guid id,
         string userName)
     {
