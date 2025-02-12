@@ -19,6 +19,7 @@ public class CreateBasketHandler : ICommandHandler<CreateBasketCommand, CreateBa
     {
         var shoppingCart = CreateShoppingCart(command.ShoppingCart);
         await _repository.CreateBasketAsync(shoppingCart, cancellationToken);
+
         return new CreateBasketResult(shoppingCart.Id);
     }
 
@@ -29,15 +30,7 @@ public class CreateBasketHandler : ICommandHandler<CreateBasketCommand, CreateBa
         shoppingCartDto.Items.ForEach(
             item =>
             {
-                var cartItem = new ShoppingCartItem(
-                    newShoppingCart.Id,
-                    item.ProductId,
-                    item.Quantity,
-                    item.Color,
-                    item.Price,
-                    item.ProductName);
-
-                newShoppingCart.AddItem(cartItem);
+                newShoppingCart.AddItem(item.ProductId, item.Quantity, item.Color, item.Price, item.ProductName);
             });
 
         return newShoppingCart;

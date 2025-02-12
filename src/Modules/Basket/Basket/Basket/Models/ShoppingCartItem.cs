@@ -5,7 +5,7 @@ namespace Basket.Basket.Models;
 public class ShoppingCartItem : Entity<Guid>
 {
     [JsonConstructor]
-    internal ShoppingCartItem(
+    public ShoppingCartItem(
         Guid id,
         Guid shoppingCartId,
         Guid productId,
@@ -50,4 +50,5 @@ public class ShoppingCartItem : Entity<Guid>
     public decimal Price { get; private set; }
 
     public string ProductName { get; private set; }
+
 }

@@ -24,18 +24,24 @@ public class ShoppingCart : Aggregate<Guid>
         return shoppingCart;
     }
 
-    public void AddItem(ShoppingCartItem item)
+    public void AddItem(
+        Guid productId,
+        int quantity,
+        string color,
+        decimal price,
+        string productName)
     {
-        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(item.Quantity);
-        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(item.Price);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
 
-        var existingItem = Items.FirstOrDefault(x => x.ProductId == item.ProductId);
+        var existingItem = Items.FirstOrDefault(x => x.ProductId == productId);
         if (existingItem is not null)
         {
-            existingItem.Quantity += item.Quantity;
+            existingItem.Quantity += quantity;
         }
         else
         {
+            var item = new ShoppingCartItem(Id, productId, quantity, color, price, productName);
             _items.Add(item);
         }
     }

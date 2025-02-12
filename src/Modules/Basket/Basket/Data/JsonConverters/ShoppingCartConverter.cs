@@ -13,18 +13,17 @@ public class ShoppingCartConverter : JsonConverter<ShoppingCart>
         var jsonDocument = JsonDocument.ParseValue(ref reader);
         var rootElement = jsonDocument.RootElement;
 
-        var id = rootElement.GetProperty("Id").GetGuid();
-        var userName = rootElement.GetProperty("UserName").GetString();
-        var items = rootElement.GetProperty("Items")
-            .EnumerateArray()
-            .Select(x => JsonSerializer.Deserialize<ShoppingCartItem>(x.GetRawText(), options))
-            .ToList();
+        var id = rootElement.GetProperty("id").GetGuid();
+        var userName = rootElement.GetProperty("userName").GetString();
+        var itemsElement = rootElement.GetProperty("items");
 
         var shoppingCart = ShoppingCart.Create(id, userName ?? string.Empty);
 
-        foreach (var item in items.OfType<ShoppingCartItem>())
+        var items = itemsElement.Deserialize<List<ShoppingCartItem>>(options);
+        if (items is not null)
         {
-            shoppingCart.AddItem(item);
+            var itemsField = typeof(ShoppingCart).GetField("_items", BindingFlags.NonPublic | BindingFlags.Instance);
+            itemsField?.SetValue(shoppingCart, items);
         }
 
         return shoppingCart;
