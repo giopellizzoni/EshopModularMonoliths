@@ -39,15 +39,15 @@ public class ShoppingCartItem : Entity<Guid>
         ProductName = productName;
     }
 
-    public Guid ShoppingCartId { get; private set; } = default!;
+    public Guid ShoppingCartId { get; private set; }
 
-    public Guid ProductId { get; private set; } = default!;
+    public Guid ProductId { get; private set; }
 
-    public int Quantity { get; set; } = default;
+    public int Quantity { get; set; }
 
-    public string Color { get; private set; } = default!;
+    public string Color { get; private set; }
 
-    public decimal Price { get; private set; } = default!;
+    public decimal Price { get; private set; }
 
-    public string ProductName { get; private set; } = default!;
+    public string ProductName { get; private set; }
 }

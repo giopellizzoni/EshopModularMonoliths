@@ -20,9 +20,9 @@ public class ShoppingCartConverter : JsonConverter<ShoppingCart>
             .Select(x => JsonSerializer.Deserialize<ShoppingCartItem>(x.GetRawText(), options))
             .ToList();
 
-        var shoppingCart = ShoppingCart.Create(id, userName);
+        var shoppingCart = ShoppingCart.Create(id, userName ?? string.Empty);
 
-        foreach (var item in items)
+        foreach (var item in items.OfType<ShoppingCartItem>())
         {
             shoppingCart.AddItem(item);
         }
