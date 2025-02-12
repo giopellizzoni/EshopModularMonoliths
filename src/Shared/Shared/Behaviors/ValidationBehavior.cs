@@ -1,6 +1,6 @@
 using FluentValidation;
 
-using Shared.CQRS;
+using Shared.Contracts.CQRS;
 
 using ValidationException = System.ComponentModel.DataAnnotations.ValidationException;
 

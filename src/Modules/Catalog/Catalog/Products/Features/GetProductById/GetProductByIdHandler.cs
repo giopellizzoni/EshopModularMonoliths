@@ -1,9 +1,6 @@
+using Catalog.Contracts.Products.Features.GetProductById;
+
 namespace Catalog.Products.Features.GetProductById;
-
-public sealed record GetProductByIdQuery(Guid Id)
-    : IQuery<GetProductByIdResult>;
-
-public sealed record GetProductByIdResult(ProductDto Product);
 
 public class GetProductByIdHandler : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
 {

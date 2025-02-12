@@ -19,9 +19,10 @@ public class AddItemIntoBasketHandler : ICommandHandler<AddItemIntoBasketCommand
     {
         var shoppingCart = await _repository.GetBasketAsync(command.UserName, false, cancellationToken);
 
+
         var shoppingCartItem = command.ShoppingCartItem.Adapt<ShoppingCartItem>();
 
-        shoppingCart?.AddItem(shoppingCartItem);
+        shoppingCart.AddItem(shoppingCartItem);
 
         await _repository.SaveChangesAsync(command.UserName, cancellationToken);
 

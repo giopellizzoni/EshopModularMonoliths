@@ -20,5 +20,5 @@ global using Microsoft.AspNetCore.Routing;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-global using Shared.CQRS;
 global using Shared.DDD;
+global using Shared.Contracts.CQRS;

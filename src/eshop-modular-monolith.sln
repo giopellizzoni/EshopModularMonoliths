@@ -33,6 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".configs", ".configs", "{DC
 		..\.editorconfig = ..\.editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Contracts", "Modules\Catalog\Catalog.Contracts\Catalog.Contracts.csproj", "{3F0550A0-09FA-44EB-977E-A9490E28B535}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Contracts", "Shared\Shared.Contracts\Shared.Contracts.csproj", "{F35199A7-582B-4DBC-B5E8-E416D95E50D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{E3ABC8D2-086D-45E2-9EEA-8D4938B471F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3ABC8D2-086D-45E2-9EEA-8D4938B471F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3ABC8D2-086D-45E2-9EEA-8D4938B471F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0550A0-09FA-44EB-977E-A9490E28B535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0550A0-09FA-44EB-977E-A9490E28B535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0550A0-09FA-44EB-977E-A9490E28B535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0550A0-09FA-44EB-977E-A9490E28B535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F35199A7-582B-4DBC-B5E8-E416D95E50D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F35199A7-582B-4DBC-B5E8-E416D95E50D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F35199A7-582B-4DBC-B5E8-E416D95E50D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F35199A7-582B-4DBC-B5E8-E416D95E50D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +88,7 @@ Global
 		{4F27097D-0732-4CE9-BB64-189B68F07661} = {D4FE8430-9DF7-4F75-90FB-B6FE35080061}
 		{9B1D7F59-5026-49AD-9F5C-5A85B2DAA335} = {8581407D-C879-425F-9376-7BAEFAD75BEE}
 		{92D8CC2C-ED03-4625-891A-D6A203EEFCE1} = {3BBBC69C-BD86-49D3-A28E-147A008C8456}
+		{3F0550A0-09FA-44EB-977E-A9490E28B535} = {DA73308E-52BB-4852-917E-2303F8B88582}
+		{F35199A7-582B-4DBC-B5E8-E416D95E50D0} = {3BBBC69C-BD86-49D3-A28E-147A008C8456}
 	EndGlobalSection
 EndGlobal

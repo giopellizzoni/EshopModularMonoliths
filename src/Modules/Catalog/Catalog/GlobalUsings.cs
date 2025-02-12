@@ -4,7 +4,7 @@ global using Carter;
 
 global using Catalog.Data;
 global using Catalog.Data.Seed;
-global using Catalog.Products.Dtos;
+global using Catalog.Contracts.Products.Dtos;
 global using Catalog.Products.Events;
 global using Catalog.Products.Exceptions;
 global using Catalog.Products.Models;
@@ -25,9 +25,8 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 
-global using Shared.Behaviors;
-global using Shared.CQRS;
 global using Shared.Data;
 global using Shared.Data.Interceptors;
 global using Shared.Data.Seed;
 global using Shared.DDD;
+global using Shared.Contracts.CQRS;
