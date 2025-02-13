@@ -27,6 +27,7 @@ public class CreateBasketEndpoint : ICarterModule
             .Produces<CreateBasketResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Creates a new basket")
-            .WithDescription("Creates a new basket");
+            .WithDescription("Creates a new basket")
+            .RequireAuthorization();
     }
 }

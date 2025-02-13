@@ -1,3 +1,5 @@
+using Keycloak.AuthServices.Authentication;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // logging
@@ -24,6 +26,8 @@ builder.Services.AddStackExchangeRedisCache(
     });
 
 builder.Services.AddMassTranssitWithAssemblies(builder.Configuration, catalogAssembly, basketAssembly, orderingAssembly);
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
 
 // module services
 builder.Services
@@ -38,6 +42,8 @@ var app = builder.Build();
 app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler(options => {});
+app.UseAuthentication();
+app.UseAuthorization();
 
 app
     .UseCatalogModule()

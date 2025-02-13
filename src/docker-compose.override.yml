@@ -5,7 +5,7 @@ services:
       - POSTGRES_DB=EshopDb
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
-    restart: on-failure
+    restart: always
     ports:
       - "5432:5432"
     volumes:
@@ -13,7 +13,7 @@ services:
 
   distributed-cache:
     container_name: redis
-    restart: on-failure
+    restart: always
     ports:
       - "6379:6379"
 
@@ -21,7 +21,7 @@ services:
     container_name: seq
     environment:
       - ACCEPT_EULA=Y
-    restart: on-failure
+    restart: always
     ports:
       - "5341:5341"
       - "9091:80"
@@ -32,7 +32,22 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
-    restart: on-failure
+    restart: always
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  identity:
+    container_name: identity
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://eshopdb/EshopDb?currentSchema=identity
+      - KC_DB_USERNAME=postgres
+      - KC_DB_PASSWORD=postgres
+    restart: always
+    ports:
+      - "9090:8080"
+    command:
+      - start-dev
