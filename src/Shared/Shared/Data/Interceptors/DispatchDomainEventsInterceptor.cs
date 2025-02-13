@@ -7,7 +7,6 @@ namespace Shared.Data.Interceptors;
 public class DispatchDomainEventsInterceptor(IMediator mediator) : SaveChangesInterceptor
 {
 
-
     public override InterceptionResult<int> SavingChanges(
         DbContextEventData eventData,
         InterceptionResult<int> result)
@@ -39,11 +38,12 @@ public class DispatchDomainEventsInterceptor(IMediator mediator) : SaveChangesIn
             .Where(a => a.Entity.DomainEvents.Any())
             .Select(a => a.Entity);
 
-        var domainEvents = aggregates
+        var enumerable = aggregates.ToList();
+        var domainEvents = enumerable
             .SelectMany(a => a.DomainEvents)
             .ToList();
 
-        aggregates.ToList().ForEach(a => a.ClearDomainEvents());
+        enumerable.ToList().ForEach(a => a.ClearDomainEvents());
 
         foreach (var domainEvent in domainEvents)
         {

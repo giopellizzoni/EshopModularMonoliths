@@ -9,6 +9,7 @@ builder.Host.UseSerilog(
 // common services
 var catalogAssembly = typeof(CatalogModule).Assembly;
 var basketAssembly = typeof(BasketModule).Assembly;
+var orderingAssembly = typeof(OrderingModule).Assembly;
 
 builder.Services
     .AddCarterWithAssemblies(catalogAssembly, basketAssembly);
@@ -21,6 +22,8 @@ builder.Services.AddStackExchangeRedisCache(
     {
         options.Configuration = builder.Configuration.GetConnectionString("Redis");
     });
+
+builder.Services.AddMassTranssitWithAssemblies(catalogAssembly, basketAssembly, orderingAssembly);
 
 // module services
 builder.Services
