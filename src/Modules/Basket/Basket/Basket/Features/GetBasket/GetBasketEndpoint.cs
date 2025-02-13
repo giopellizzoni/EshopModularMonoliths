@@ -11,8 +11,16 @@ public class GetBasketEndpoint : ICarterModule
             async (
                 string userName,
                 ISender sender,
+                ClaimsPrincipal user,
                 CancellationToken cancellationToken) =>
             {
+
+                var loggedUser = user.Identity!.Name;
+                if(loggedUser != userName)
+                {
+                    return Results.Unauthorized();
+                }
+
                 var result = await sender.Send(
                     new GetBasketQuery(userName),
                     cancellationToken);
@@ -25,6 +33,7 @@ public class GetBasketEndpoint : ICarterModule
             .Produces<GetBasketResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Gets a basket")
-            .WithDescription("Gets a basket for a given user name.");
+            .WithDescription("Gets a basket for a given user name.")
+            .RequireAuthorization();
     }
 }

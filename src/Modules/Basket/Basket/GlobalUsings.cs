@@ -1,4 +1,5 @@
 global using System.Reflection;
+global using System.Security.Claims;
 
 global using Basket.Basket.Dtos;
 global using Basket.Basket.Exceptions;

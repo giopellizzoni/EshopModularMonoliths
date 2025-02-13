@@ -13,9 +13,21 @@ public class CreateBasketEndpoint : ICarterModule
                 async (
                     CreateBasketRequest request,
                     ISender sender,
+                    ClaimsPrincipal user,
                     CancellationToken cancellationToken) =>
                 {
-                    var command = request.Adapt<CreateBasketCommand>();
+                    var userName = user.Identity!.Name;
+                    if (userName is null)
+                    {
+                        return Results.BadRequest("User not found");
+                    }
+
+                    var updateShoppingCart = request.ShoppingCart with
+                    {
+                        UserName = userName,
+                    };
+
+                    var command = new CreateBasketCommand(updateShoppingCart);
 
                     var result = await sender.Send(command, cancellationToken);
 
