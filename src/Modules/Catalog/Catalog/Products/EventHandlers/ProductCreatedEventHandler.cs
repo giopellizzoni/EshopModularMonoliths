@@ -1,3 +1,5 @@
+using Shared.Messaging.Events;
+
 namespace Catalog.Products.EventHandlers;
 
 public class ProductCreatedEventHandler : INotificationHandler<ProductCreatedEvent>
@@ -14,6 +16,9 @@ public class ProductCreatedEventHandler : INotificationHandler<ProductCreatedEve
         CancellationToken cancellationToken)
     {
         _logger.LogInformation("Domain Event Handled: {DomainEvent}", notification.GetType().Namespace);
+
+        var integrationEvent = new ProductCreatedIntegrationEvent();
+
         return Task.CompletedTask;
     }
 }
