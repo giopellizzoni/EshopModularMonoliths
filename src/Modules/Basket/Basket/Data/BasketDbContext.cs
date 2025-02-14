@@ -6,6 +6,7 @@ public class BasketDbContext : DbContext
     {
     }
 
+    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
     public DbSet<ShoppingCartItem> ShoppingCartItems => Set<ShoppingCartItem>();
 
     public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
