@@ -22,15 +22,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Modules\Basket\Basket\Basket.csproj" />
-      <ProjectReference Include="..\..\..\Modules\Catalog\Catalog\Catalog.csproj" />
-      <ProjectReference Include="..\..\..\Modules\Ordering\Ordering\Ordering.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="..\..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+      <ProjectReference Include="..\..\Modules\Basket\Basket.csproj" />
+      <ProjectReference Include="..\..\Modules\Catalog\Catalog\Catalog.csproj" />
+      <ProjectReference Include="..\..\Modules\Ordering\Ordering.csproj" />
     </ItemGroup>
 
 </Project>
